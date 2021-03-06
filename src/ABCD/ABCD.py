@@ -6,7 +6,7 @@ def one_to_zero_network(filename,newfilename):
 	with open(filename) as f:
 		lines = f.readlines()
 		for line in lines:
-			l = line.split() 
+			l = line.split()
 			l[0], l[1] = (int(l[0])-1),(int(l[1])-1)
 			f = open(newfilename, "a")
 			f.write(f"{l[0]} {l[1]}\n")
@@ -15,7 +15,7 @@ def one_to_zero_community(filename,newfilename):
 	with open(filename) as f:
 		lines = f.readlines()
 		for line in lines:
-			l = line.split() 
+			l = line.split()
 			l[1] = (int(l[1])-1)
 			f = open(newfilename, "a")
 			f.write(f"{l[1]}\n")
@@ -45,12 +45,12 @@ if __name__ == "__main__":
 	parser.add_argument('-xi', '--xi', type=float, default=0.2, help='fraction of edges to fall in background graph')
 	parser.add_argument('-isCL', '--isCL', type=str, choices=['true', 'false'], default="false", help='Maximum size of communities in the graph. If not specified, this is set to n, the total number of nodes in the graph.')
 	parser.add_argument('-islocal', '--islocal', type=str, choices=['true', 'false'],  default="false", help='islocal')
-	parser.add_argument('-degreefile', '--degreefile', type=str, default=None, help='name of file do generate that contains vertex degrees')
-	parser.add_argument('-communitysizesfile', '--communitysizesfile', type=str, default=None, help='name of file do generate that contains community sizes')
-	parser.add_argument('-communityfile', '--communityfile', type=str, default='network.community', help='name of file do generate that contains assignments of vertices to communities')
-	parser.add_argument('-networkfile', '--networkfile', type=str, default='network.edgelist', help='name of file do generate that contains edges of the generated graph')
+	parser.add_argument('-degreefile', '--degreefile', type=str, default=None, help='name of file to generate that contains vertex degrees')
+	parser.add_argument('-communitysizesfile', '--communitysizesfile', type=str, default=None, help='name of file to generate that contains community sizes')
+	parser.add_argument('-communityfile', '--communityfile', type=str, default='network.community', help='name of file to generate that contains assignments of vertices to communities')
+	parser.add_argument('-networkfile', '--networkfile', type=str, default='network.edgelist', help='name of file to generate that contains edges of the generated graph')
 	parser.add_argument('-seed', '--seed', type=int, default=1, help='seed')
-	parser.add_argument('-xiormu', '--xiormu', type=str, choices=['xi', 'mu'], default='xi', help='name of file do generate that contains edges of the generated graph')
+	parser.add_argument('-xiormu', '--xiormu', type=str, choices=['xi', 'mu'], default='xi', help='name of file to generate that contains edges of the generated graph')
 	args = parser.parse_args()
 
 	path = os.path.abspath(getsourcefile(lambda:0)).replace('ABCD.py','utils')
@@ -62,6 +62,10 @@ if __name__ == "__main__":
 
 	if args.communitysizesfile is None:
 		os.system(f'julia {path}/com_sampler.jl community_sizes.txt {args.t2} {args.c_min} {args.c_max} {args.n} {args.c_max_iter} {args.seed}')
+		args.communitysizesfile = 'community_sizes.txt'
+
+	if args.communitysizesfile == "generate":
+		create_community_sizes_file(args.n)
 		args.communitysizesfile = 'community_sizes.txt'
 
 	os.system(f'julia {path}/graph_sampler.jl {args.networkfile} {args.communityfile} {args.degreefile} {args.communitysizesfile} {args.xiormu} {args.xi} {args.isCL} {args.islocal} {args.seed}')

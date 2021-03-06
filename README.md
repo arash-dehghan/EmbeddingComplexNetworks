@@ -2,13 +2,13 @@ This repository provides complementary code and data for the article [Evaluating
 
 ### Repository structure
 Repository groups files into 4 folders:
-* `data` stores graphs and community files for 'real-world' graphs analyzed in the article
-* `experiments` contains scripts used for conducted experiments, described in detail in the article
-* `results` stores .csv files with experiments results - basis for graphs and analysis
-* `src` directory include scripts, source files and packages utilized in the experiments
+* `data` stores graphs and community files used in the experiments
+* `experiments` contains scripts for conducting experiments, script with utility functions and data used to produce specific graphs
+* `results` stores .csv files with results of experiments
+* `src` directory include external scripts, source files and packages utilized in the experiments
 
 ### Experiments mapping
-We used numerical IDs for each experiment to simplify the scripts. Each ID correspond to following parameters/tasks:
+We used numerical IDs for each experiment to simplify notation in the scripts. Each ID correspond to following tasks:
 |Experiment ID | Description |
 |--------------|-------------|
 |1|Divergence and variance on one ABCD graph with default parameters|
@@ -24,9 +24,9 @@ We used numerical IDs for each experiment to simplify the scripts. Each ID corre
 |11|Link Prediction|
 
 ### Execution in local environment
-Majority of the experiments was launched in distributed cloud environment and we provide Bash scripts used to set up computing nodes based on NFS storage. Please note that some scripts may perform correctly only on Unix-based systems, so we recommend using Linux distributions or macOS.
-To prepare local environment for running the experiments following steps must be completed:
-1. Install [Julia](https://julialang.org/downloads/) (experiments run under version 1.5.3)
+Majority of the experiments were launched in cloud environment due to high computational requirements.
+To prepare local environment for the experiments please follow guidelines below:
+1. Install [Julia](https://julialang.org/downloads/) (experiments ran using Julia 1.5.3)
 2. Add required Julia packages
 ```bash
 julia -e 'using Pkg; Pkg.add(url="https://github.com/KrainskiL/CGE.jl")'
@@ -36,20 +36,28 @@ julia -e 'using Pkg; Pkg.add(url="https://github.com/bkamins/ABCDGraphGenerator.
 ```bash
 pip -r requirements.txt
 ```
-3. Install OpenNE package
+3. Download and install [OpenNE](https://github.com/thunlp/OpenNE) package
 ```bash
-cd src/OpenNE
+git clone https://github.com/thunlp/OpenNE.git
+cd src
 python setup.py install
 ```
-4. Compile [VERSE](https://github.com/xgfs/verse) executable for your system. `experiments` directory contain executable build for Ubuntu 18.04.
+4. Download and compile [VERSE](https://github.com/xgfs/verse) executable for your OS. `src/verse/src` directory contain executable build for Ubuntu 18.04. For more details please check VERSE repository.
+```bash
+git clone https://github.com/xgfs/verse.git
+cd src && make;
+```
 
-Each experiment's directory contains more details on specific execution procedure.
+Each experiment can be conducted by runnin `experiment.py` in appropriate folder in `experiments` directory.
 
 ### Reproducibility
-During computation randomnes was controlled with appropriate seeds, however embeddings for stochastic embedding algorithms may not be reproducible. Controlling output of embedding algorithms requires modifying OpenNE code. Additionaly, node2vec and DeepWalk use Worde2Vec embeddings as part of internal processing, which requires another mechanism of handling randomness. All other resources or computations are fully reproducible including:
-* ABCD graphs and corresponding files for degree distribution, community sizes, etc.
-* Train/test splits of graphs
-* Output of classification models
+Presented experiments include multiple random processes, in particular:
+* generation of synthetic ABCD graphs
+* generation of embeddings (excluding deterministic HOPE and LINE)
+* splitting data to train and test subsets
+* training of classification models (XGBoost)
+
+All abovementioned algorithms were controlled with proper seeding excluding generation of embedding which would require modification to OpenNE package and additional constraints for specific embedding algorithms (Node2Vec and DeepWalk rely on external Word2Vec implementation different seeding mechanism). As embedding algorithms provide minor contribution to the overall variance of output measures, executing experiments in current setup should still produce results closely resembling the original ones.
 
 ### Acknowledgments
 #### Computing environment

@@ -1,28 +1,23 @@
 import os
 import ast
 import sys
-import shutil
 sys.path.append('../')
 from utils import *
 
 #Setup
-graph_name = 'exp10'
-degreefile = '../degrees.txt'
-community_sizes = '../community_sizes.txt'
+graphs = ['mousebrain', 'emaileu', 'github', 'airport']
 edgelist = f'../../data/{graph_name}/{graph_name}.edgelist'
 community = f'../../data/{graph_name}/{graph_name}.community'
 algorithms = ['node2vec','hope','deepwalk','line','sdne','verse']
 dimensions = [4,8,16,32,64,128]
-seed = 1
-iterations = 10
-
-#Create graph
-os.system(f'python3 ../../src/ABCD/ABCD.py -name {graph_name} -degreefile {degreefile} -communitysizesfile {community_sizes} -seed {seed}')
+iterations = 30
 
 #Run Experiment
-for i in range(iterations):
+for graph in graphs:
+	edgelist = f'../../data/{graph}/{graph}.edgelist'
+	community = f'../../data/{graph}/{graph}.community'
 	for alg in algorithms:
 		for dim in dimensions:
 			for _ in range(iterations):
 				results = os.popen(f'python3 ../../src/main.py -algorithm {alg} -edgelist {edgelist} -community {community}').read()
-				write_to_csv('results',['algorithm','seed','dim','ami','div','runtime'],[alg, seed, dim, ami_score(edgelist,community,'result.embedding')] + ast.literal_eval(results))
+				write_to_csv('results',['algorithm','seed','dim','graph','div','runtime'],[alg, seed, dim, graph]+ ast.literal_eval(results))

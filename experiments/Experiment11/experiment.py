@@ -7,7 +7,6 @@ from utils import *
 
 #Setup
 graph_name = 'exp11'
-degreefile = '../degrees.txt'
 community_sizes = '../community_sizes.txt'
 edgelist = f'../../data/{graph_name}/{graph_name}.edgelist'
 community = f'../../data/{graph_name}/{graph_name}.community'
@@ -17,12 +16,13 @@ seed = 1
 iterations = 10
 
 #Create graph
-os.system(f'python3 ../../src/ABCD/ABCD.py -name {graph_name} -degreefile {degreefile} -communitysizesfile {community_sizes} -seed {seed}')
+os.system(f'python3 ../../src/ABCD/ABCD.py -name {graph_name} -communitysizesfile {community_sizes} -d_max 464 -seed {seed}')
 
 #Run Experiment
-for i in range(iterations):
-	for alg in algorithms:
-		for dim in dimensions:
-			for _ in range(iterations):
-				results = os.popen(f'python3 ../../src/main.py -algorithm {alg} -edgelist {edgelist} -community {community}').read()
-				write_to_csv('results',['algorithm','seed','dim','ami','div','runtime'],[alg, seed, dim, ami_score(edgelist,community,'result.embedding')] + ast.literal_eval(results))
+for alg in algorithms:
+	for dim in dimensions:
+		for i in range(iterations):
+			G, edges, reduced = remove_random_edges(edgelist,i)
+			results = os.popen(f'python3 ../../src/main.py -algorithm {alg} -edgelist {reduced} -community {community}').read()
+			auc, acc = auc_score(G,edges,'result.embedding',i)
+			write_to_csv('results',['algorithm','seed','dim','auc','acc','div','runtime'],[alg, seed, dim, ]auc, acc + ast.literal_eval(results))

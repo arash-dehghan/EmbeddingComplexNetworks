@@ -7,7 +7,7 @@ from utils import *
 
 #Setup
 graph_name = 'exp3'
-degreefile = '../degrees.txt'
+degreefile = '../degreesExp3.txt'
 edgelist = f'../../data/{graph_name}/{graph_name}.edgelist'
 community = f'../../data/{graph_name}/{graph_name}.community'
 algorithms = ['node2vec','hope','deepwalk','line','sdne','verse']
@@ -16,7 +16,7 @@ betas = [1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0]
 iterations = 10
 
 #Run Experiment
-seed = 1
+seed = 0
 for beta in betas:
 	for i in range(iterations):
 		#Create Graph
