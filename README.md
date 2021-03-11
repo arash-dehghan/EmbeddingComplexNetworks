@@ -42,13 +42,13 @@ git clone https://github.com/thunlp/OpenNE.git
 cd src
 python setup.py install
 ```
-4. Download and compile [VERSE](https://github.com/xgfs/verse) executable for your OS. `src/verse/src` directory contain executable build for Ubuntu 18.04. For more details please check VERSE repository.
+4. Download and compile [VERSE](https://github.com/xgfs/verse) executable for your OS. `src/verse/src` directory contains executable build for Ubuntu 18.04. For more details please check VERSE repository.
 ```bash
 git clone https://github.com/xgfs/verse.git
 cd src && make;
 ```
 
-Each experiment can be conducted by runnin `experiment.py` in appropriate folder in `experiments` directory.
+Each experiment can be conducted by running `experiment.py` in appropriate folder in `experiments` directory.
 
 ### Reproducibility
 Presented experiments include multiple random processes, in particular:
@@ -57,10 +57,10 @@ Presented experiments include multiple random processes, in particular:
 * splitting data to train and test subsets
 * training of classification models (XGBoost)
 
-All abovementioned algorithms were controlled with proper seeding excluding generation of embedding which would require modification to OpenNE package and additional constraints for specific embedding algorithms (Node2Vec and DeepWalk rely on external Word2Vec implementation different seeding mechanism). As embedding algorithms provide minor contribution to the overall variance of output measures, executing experiments in current setup should still produce results closely resembling the original ones.
+All abovementioned algorithms were controlled with proper seeding except generation of embedding which would require modification to OpenNE package and additional constraints for specific embedding algorithms (Node2Vec and DeepWalk rely on external Word2Vec implementation different seeding mechanism). As embedding algorithms provide minor contribution to the overall variance of output measures, executing experiments in current setup should still produce results closely resembling the original ones.
 
 ### Acknowledgments
 #### Computing environment
 Experiments were conducted using [SOSCIP](https://www.soscip.org/) Cloud infrastructure based on OpenStack cloud system.
 #### Embedding algorithms codebase
-We used [OpenNE](https://github.com/thunlp/OpenNE) framework, that expose common interface to many embedding algorithms. For VERSE algorithm, implementation available under https://github.com/xgfs/verse was used.
+We used [OpenNE](https://github.com/thunlp/OpenNE) framework, that exposes common interface to many embedding algorithms. For VERSE algorithm, implementation available under https://github.com/xgfs/verse was used.
