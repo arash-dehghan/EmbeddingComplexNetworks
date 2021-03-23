@@ -7,6 +7,13 @@ Repository groups files into 4 folders:
 * `results` stores .csv files with results of experiments
 * `src` directory include external scripts, source files and packages utilized in the experiments
 
+### Datasets
+In the experiments we used both synthethic and real-world graphs. Synthetic data is generated using [ABCD framework](https://github.com/bkamins/ABCDGraphGenerator.jl). For more information about real-world graphs please refer to following sources:
+* Airports - https://www.kaggle.com/flashgordon/usa-airport-dataset#Airports2.csv
+* Email-EU - https://snap.stanford.edu/data/email-Eu-core-temporal.html
+* Github Developers - https://github.com/benedekrozemberczki/MUSAE
+* Mouse Brain - http://networkrepository.com/bn-mouse-kasthuri-graph-v4.php
+
 ### Experiments mapping
 We used numerical IDs for each experiment to simplify notation in the scripts. Each ID correspond to following tasks:
 |Experiment ID | Description |
