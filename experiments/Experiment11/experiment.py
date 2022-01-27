@@ -23,6 +23,6 @@ for alg in algorithms:
 	for dim in dimensions:
 		for i in range(iterations):
 			G, edges, reduced = remove_random_edges(edgelist,i)
-			results = os.popen(f'python3 ../../src/main.py -algorithm {alg} -edgelist {reduced} -community {community}').read()
+			results = os.popen(f'python3 ../../src/main.py -algorithm {alg} -edgelist {reduced} -community {community} -representation_size {dim}').read()
 			auc, acc = auc_score(G,edges,'result.embedding',i)
 			write_to_csv('results',['algorithm','seed','dim','auc','acc','div','runtime'],[alg, seed, dim, ]auc, acc + ast.literal_eval(results))

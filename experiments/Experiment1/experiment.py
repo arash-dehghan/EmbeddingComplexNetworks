@@ -20,6 +20,6 @@ os.system(f'python3 ../../src/ABCD/ABCD.py -name {graph_name} -seed {seed}')
 for alg in algorithms:
 	for dim in dimensions:
 		for _ in range(iterations):
-			results = os.popen(f'python3 ../../src/main.py -algorithm {alg} -edgelist {edgelist} -community {community}').read()
+			results = os.popen(f'python3 ../../src/main.py -algorithm {alg} -edgelist {edgelist} -community {community} -representation_size {dim}').read()
 			write_to_csv('results',['algorithm','seed','dim','div','runtime'],[alg, seed, dim]+ ast.literal_eval(results))
 

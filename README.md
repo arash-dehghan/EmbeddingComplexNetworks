@@ -29,6 +29,7 @@ We used numerical IDs for each experiment to simplify notation in the scripts. E
 |9|Divergence and variance for Mousebrain, Airports, GitHub and EmailEU graphs|
 |10|Community Detection|
 |11|Link Prediction|
+|50k|Divergence and variance on one ABCD graph with 50k nodes |
 
 ### Execution in local environment
 Majority of the experiments were launched in cloud environment due to high computational requirements.
@@ -36,12 +37,12 @@ To prepare local environment for the experiments please follow guidelines below:
 1. Install [Julia](https://julialang.org/downloads/) (experiments ran using Julia 1.5.3)
 2. Add required Julia packages
 ```bash
-julia -e 'using Pkg; Pkg.add(url="https://github.com/KrainskiL/CGE.jl")'
+julia -e 'using Pkg; Pkg.add(url="https://github.com/KrainskiL/CGE.jl", rev="v1.2.2")'
 julia -e 'using Pkg; Pkg.add(url="https://github.com/bkamins/ABCDGraphGenerator.jl")'
 ```
 4. Install python dependencies from `requirements.txt`
 ```bash
-pip -r requirements.txt
+pip install -r requirements.txt
 ```
 3. Download and install [OpenNE](https://github.com/thunlp/OpenNE) package
 ```bash

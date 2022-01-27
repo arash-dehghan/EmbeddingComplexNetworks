@@ -24,5 +24,5 @@ for i in range(iterations):
 	for alg in algorithms:
 		for dim in dimensions:
 			for _ in range(iterations):
-				results = os.popen(f'python3 ../../src/main.py -algorithm {alg} -edgelist {edgelist} -community {community}').read()
+				results = os.popen(f'python3 ../../src/main.py -algorithm {alg} -edgelist {edgelist} -community {community} -representation_size {dim}').read()
 				write_to_csv('results',['algorithm','seed','dim','ami','div','runtime'],[alg, seed, dim, ami_score(edgelist,community,'result.embedding')] + ast.literal_eval(results))

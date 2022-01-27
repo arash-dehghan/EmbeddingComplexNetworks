@@ -23,7 +23,7 @@ for pq in pq_vals:
 		os.system(f'python3 ../../src/ABCD/ABCD.py -name {graph_name} -degreefile {degreefile} -communitysizesfile {community_sizes} -seed {seed}')
 		for dim in dimensions:
 			for _ in range(iterations):
-				results = os.popen(f'python3 ../../src/main.py -algorithm node2vec -edgelist {edgelist} -community {community} -p {pq[0]} -q {pq[1]}').read()
-				write_to_csv('results',['algorithm','seed','dim','p','q','div','runtime'],[alg, seed, dim, pq[0], pq[1]] + ast.literal_eval(results))
+				results = os.popen(f'python3 ../../src/main.py -algorithm node2vec -edgelist {edgelist} -community {community} -p {pq[0]} -q {pq[1]} -representation_size {dim}').read()
+				write_to_csv('results',['algorithm','seed','dim','p','q','div','runtime'],["N2V", seed, dim, pq[0], pq[1]] + ast.literal_eval(results))
 		seed+=1
 		shutil.rmtree(f'../../data/{graph_name}')

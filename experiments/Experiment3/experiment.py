@@ -24,7 +24,7 @@ for beta in betas:
 		for alg in algorithms:
 			for dim in dimensions:
 				for _ in range(iterations):
-					results = os.popen(f'python3 ../../src/main.py -algorithm {alg} -edgelist {edgelist} -community {community}').read()
+					results = os.popen(f'python3 ../../src/main.py -algorithm {alg} -edgelist {edgelist} -community {community} -representation_size {dim}').read()
 					write_to_csv('results',['algorithm','seed','dim','beta','div','runtime'],[alg, seed, dim, beta] + ast.literal_eval(results))
 		seed+=1
 		shutil.rmtree(f'../../data/{graph_name}')

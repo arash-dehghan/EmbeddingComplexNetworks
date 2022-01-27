@@ -1,5 +1,4 @@
 pandas
-click
 scipy==1.4.1
 numpy==1.18.1
 Pillow==8.0.1 
@@ -9,3 +8,4 @@ gensim==3.6.0
 tensorflow==1.15.0 
 python_igraph==0.8.3 
 Click==7.0
+xgboost

@@ -83,8 +83,8 @@ if __name__ == "__main__":
 	parser.add_argument('-algorithm', '--algorithm', type=str, choices=['node2vec','hope','deepwalk','line','sdne','verse'], required=True)
 	parser.add_argument('-edgelist', '--edgelist', type=str, required=True)
 	parser.add_argument('-community', '--community', type=str, default=None)
-	parser.add_argument('-l', '--l',type=float, default=200, help='Number of landmarks to create')
-	parser.add_argument('-f', '--f',type=float, default=0, help='Number of forced landmarks to be created')
+	parser.add_argument('-l', '--l',type=int, default=200, help='Number of landmarks to create')
+	parser.add_argument('-f', '--f',type=int, default=0, help='Number of forced landmarks to be created')
 	parser.add_argument('-m', '--m', choices = ['rss', 'rss2', 'size', 'diameter'], default='diameter', help='Chosen ladnmark creation method')
 	parser.add_argument('-clustering', '--clustering', choices = ['ecg', 'louvain'], default='ecg', help='Clustering used')
 	parser.add_argument('-number-walks', '--number_walks', type=int, default=10, help='The number of random walks to start at each node; the default is 10;')
@@ -131,10 +131,10 @@ if __name__ == "__main__":
 		save_as_n2v(Embedding('result.embedding',args.representation_size).embeddings,'result.embedding',g['min'])
 	alg_endTime = datetime.now()
 
-	with open(f'result.embedding', 'r') as fin:
-		data = fin.read().splitlines(True)
-	with open(f'result.embedding', 'w') as fout:
-		fout.writelines(data[1:])
+	# with open(f'result.embedding', 'r') as fin:
+	# 	data = fin.read().splitlines(True)
+	# with open(f'result.embedding', 'w') as fout:
+	# 	fout.writelines(data[1:])
 
 	cge_path = cur_dir.replace('main.py','CGE/CGE_CLI.jl')
 	results = ast.literal_eval(os.popen(f'julia {cge_path} -g {args.edgelist} -c {args.community} -e result.embedding -l {args.l} -f {args.f} -m {args.m}').read())
